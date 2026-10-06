@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>글자수 세기</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #f5f6f7;
+    color: #222;
+    font-family: "Noto Sans KR", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  }
+  header {
+    background: #fff;
+    border-bottom: 2px solid #03c75a;
+    padding: 14px 0;
+  }
+  header h1 {
+    max-width: 640px;
+    margin: 0 auto; padding: 0 16px;
+    font-size: 22px;
+    font-weight: 800;
+    color: #03c75a;
+  }
+  main { max-width: 640px; margin: 20px auto; padding: 0 16px; }
+  .card {
+    background: #fff;
+    border: 1px solid #e1e3e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  textarea {
+    width: 100%;
+    height: 200px;
+    padding: 12px;
+    font-size: 16px;
+    font-family: inherit;
+    border: 2px solid #03c75a;
+    border-radius: 6px;
+    resize: vertical;
+    outline: none;
+  }
+  .row { display: flex; align-items: center; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+  label { font-size: 14px; color: #555; }
+  #limit {
+    width: 110px;
+    padding: 8px;
+    font-size: 15px;
+    border: 1px solid #c9ccd1;
+    border-radius: 6px;
+  }
+  #limit:focus { border-color: #03c75a; outline: none; }
+  button {
+    margin-left: auto;
+    padding: 10px 26px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    background: #03c75a;
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button:hover { background: #02b351; }
+  #result { font-size: 18px; line-height: 1.8; }
+  #result b { font-size: 26px; color: #03c75a; }
+  #result b.over, .over { color: red; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>글자수 세기</h1>
+  </header>
+  <main>
+    <div class="card">
+      <textarea id="input" placeholder="여기에 글을 입력하세요"></textarea>
+      <div class="row">
+        <label>제한 글자수(공백 포함): <input type="number" id="limit" min="0"></label>
+        <button id="btn">글자수 세기</button>
+      </div>
+    </div>
+    <div class="card">
+      <div id="result"></div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('btn').addEventListener('click', function () {
+      var text = document.getElementById('input').value;
+      var withSpace = Array.from(text).length;
+      var withoutSpace = Array.from(text.replace(/\s/g, '')).length;
+      var limitValue = document.getElementById('limit').value;
+      var over = limitValue !== '' && withSpace > Number(limitValue);
+      document.getElementById('result').innerHTML =
+        '공백 포함: <b' + (over ? ' class="over"' : '') + '>' + withSpace + '</b>자<br>' +
+        '공백 제외: <b>' + withoutSpace + '</b>자';
+    });
+  </script>
+</body>
+</html>
